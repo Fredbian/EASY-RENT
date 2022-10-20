@@ -50,3 +50,72 @@ const typeDefs = gql`
 `
 
 module.exports = typeDefs;
+
+
+/**
+ * mutation AddRoom($image: String, $location: String, $price: Int, $totalRooms: Int, $parkingSpace: Int, $isShareBill: Boolean, $withFurniture: Boolean, $description: String, $ownerEmail: String, $ownerContact: Int, $createdAt: String) {
+  addRoom(image: $image, location: $location, price: $price, totalRooms: $totalRooms, parkingSpace: $parkingSpace, isShareBill: $isShareBill, withFurniture: $withFurniture, description: $description, ownerEmail: $ownerEmail, ownerContact: $ownerContact, createdAt: $createdAt) {
+    _id
+    image
+    location
+    price
+    totalRooms
+    parkingSpace
+    isShareBill
+    withFurniture
+    description
+    ownerEmail
+    ownerContact
+    createdAt
+  }
+}
+
+{
+  "username": "testuser",
+  "email": "testuser@mail.com",
+  "password": "testuser",
+  "image": "a",
+  "location": "b",
+  "price": 10,
+  "totalRooms": 2,
+  "parkingSpace": 3,
+  "isShareBill": true,
+  "withFurniture": true,
+  "description": "abcd",
+  "ownerEmail": "testuser@mail.com",
+  "ownerContact": 123456789,
+  "createdAt": null
+}
+ */
+
+
+
+/**
+ * mutation UpdateRoom($roomId: ID!, $image: String, $price: Int, $parkingSpace: Int, $isShareBill: Boolean, $withFurniture: Boolean, $description: String, $ownerContact: Int) {
+  updateRoom(roomId: $roomId, image: $image, price: $price, parkingSpace: $parkingSpace, isShareBill: $isShareBill, withFurniture: $withFurniture, description: $description, ownerContact: $ownerContact) {
+    _id
+    image
+    location
+    price
+    totalRooms
+    parkingSpace
+    isShareBill
+    withFurniture
+    description
+    ownerEmail
+    ownerContact
+    createdAt
+  }
+}
+
+{
+  "roomId": "634293a9cd66b6115ca3d2f3",
+  "image": "a1",
+  "price": 20,
+  "parkingSpace": 4,
+  "isShareBill": false,
+  "withFurniture": false,
+  "description": "efg",
+  "ownerContact": 5555555
+}
+ */
