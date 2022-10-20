@@ -26,4 +26,4 @@ MVP
 - User can delete their room info(ROMOVE_ROOM)
 
 	
-https://github.com/Fredbian/EASY-RENT
+https://github.com/Fredbian/easy-rent
