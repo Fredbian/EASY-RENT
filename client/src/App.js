@@ -1,24 +1,72 @@
-import logo from './logo.svg';
-import './App.css';
+// import dependencies and components
+import React from 'react'
+import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
+import Footer from './components/Footer'
+
+// TODO: import other pages if need
+// import Navigation from './components/Navigation'
+// import Home from './pages/Home'
+import LoginSignup from './pages/Login-Signup'
+// import Dashboard from './pages/Dashboard'
+// import Header from './components/Header'
+// import Header from './components/Header'
+
+
+//import Apollo hooks and modules
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client"
+
+import { setContext } from "@apollo/client/link/context"
+
+
+// Construct main GraphQL API endpoint
+const httpLink = createHttpLink({
+  uri: "/graphql",
+});
+
+// Construct request middleware that will attach the JWT token to every request as an `authorization` header
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("id_token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
+
+// execute the `authLink` middleware prior to making the request to our GraphQL API
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <ApolloProvider client={client}>
+        {/* V2 */}
+        <Router>
+          <div className="flex-column justify-flex-start min-100-vh">
+            {/* <Navigation /> */}
+            <div className="container">
+              <Routes>
+                {/* <Route path="/" element={<Home />} /> */}
+                <Route path="/login-signup" element={<LoginSignup />} />
+                {/* <Route path="/signup" element={<Signup />} /> */}
+                {/* <Route path="/user/:id" element={<Dashboard />} /> */}
+                {/* <Route path="/addroom" element={<AddRoomForm />} /> */}
+                {/* <Route path="/updateroom" element={<UpdateRoomForm />} /> */}
+                <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
+              </Routes>
+            </div>
+            <Footer />
+          </div>
+        </Router>
+      </ApolloProvider>
   );
 }
 
