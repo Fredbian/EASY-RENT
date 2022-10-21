@@ -1,15 +1,19 @@
 // import dependencies and components
 import React from 'react'
 import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
+
 import Footer from './components/Footer'
 
 // TODO: import other pages if need
-// import Navigation from './components/Navigation'
-// import Home from './pages/Home'
-// import LoginSignup from './pages/Login-Signup'
+import Navigation from './components/Navigation'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
 // import Dashboard from './pages/Dashboard'
-// import Header from './components/Header'
-// import Header from './components/Header'
+// import AddRoom from './pages/AddRoom'
+// import SendMessage from './pages/SendMessage'
+// import UpdateRoom from './pages/UpdateRoom'
+
 
 
 //import Apollo hooks and modules
@@ -21,6 +25,7 @@ import {
 } from "@apollo/client"
 
 import { setContext } from "@apollo/client/link/context"
+// import RoomCardDashboard from './components/RoomCardDashboard';
 
 
 // Construct main GraphQL API endpoint
@@ -51,15 +56,16 @@ function App() {
         {/* V2 */}
         <Router>
           <div className="flex-column justify-flex-start min-100-vh">
-            {/* <Navigation /> */}
+            <Navigation />
             <div className="container">
               <Routes>
-                {/* <Route path="/" element={<Home />} /> */}
-                {/* <Route path="/login-signup" element={<LoginSignup />} /> */}
-                {/* <Route path="/signup" element={<Signup />} /> */}
-                {/* <Route path="/user/:id" element={<Dashboard />} /> */}
-                {/* <Route path="/addroom" element={<AddRoomForm />} /> */}
-                {/* <Route path="/updateroom" element={<UpdateRoomForm />} /> */}
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                {/* <Route path="/dashboard" element={<Dashboard />} /> */}
+                {/* <Route path="/addroom" element={<AddRoom />} /> */}
+                {/* <Route path="/updateroom/:roomId" element={<UpdateRoom />} /> */}
+                {/* <Route path="/sendmessage/:roomId" element={<SendMessage />} /> */}
                 <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
               </Routes>
             </div>
