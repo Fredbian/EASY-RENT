@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route, } from 'react-router-dom';
 import Footer from './components/Footer'
 
 // TODO: import other pages if need
-// import Navigation from './components/Navigation'
+import Navigation from './components/Navigation'
 // import Home from './pages/Home'
 import Login from './pages/Login'
 // import Signup from './pages/Signup'
@@ -55,7 +55,7 @@ function App() {
         {/* V2 */}
         <Router>
           <div className="flex-column justify-flex-start min-100-vh">
-            {/* <Navigation /> */}
+            <Navigation />
             <div className="container">
               <Routes>
                 {/* <Route path="/" element={<Home />} /> */}
