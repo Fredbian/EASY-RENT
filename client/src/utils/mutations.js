@@ -25,8 +25,8 @@ export const ADD_USER = gql`
 `
 
 export const ADD_ROOM = gql`
-  mutation addRoom($image: String, $location: String, $price: Int, $totalRooms: Int, $parkingSpace: Int, $isShareBill: Boolean, $withFurniture: Boolean, $description: String, $ownerEmail: String, $ownerContact: String, $createdAt: String) {
-    addRoom(image: $image, location: $location, price: $price, totalRooms: $totalRooms, parkingSpace: $parkingSpace, isShareBill: $isShareBill, withFurniture: $withFurniture, description: $description, ownerEmail: $ownerEmail, ownerContact: $ownerContact, createdAt: $createdAt) {
+  mutation addRoom($image: String, $location: String, $price: Int, $totalRooms: Int, $parkingSpace: Int, $isShareBill: String, $withFurniture: String, $description: String, $ownerEmail: String, $ownerContact: String) {
+    addRoom(image: $image, location: $location, price: $price, totalRooms: $totalRooms, parkingSpace: $parkingSpace, isShareBill: $isShareBill, withFurniture: $withFurniture, description: $description, ownerEmail: $ownerEmail, ownerContact: $ownerContact) {
         _id
         image
         location
@@ -44,8 +44,9 @@ export const ADD_ROOM = gql`
 `
 
 export const UPDATE_ROOM = gql`
-  mutation updateRoom($roomId: ID!, $image: String, $price: Int, $parkingSpace: Int, $isShareBill: Boolean, $withFurniture: Boolean, $description: String, $ownerContact: String) {
-    updateRoom(image: $image, price: $price, parkingSpace: $parkingSpace, isShareBill: $isShareBill, withFurniture: $withFurniture, description: $description, ownerContact: $ownerContact) {
+  mutation updateRoom($roomId: ID!, $image: String, $price: Int, $parkingSpace: Int, $isShareBill: String, $withFurniture: String, $description: String, $ownerContact: String) {
+    updateRoom(roomId: $roomId, image: $image, price: $price, parkingSpace: $parkingSpace, isShareBill: $isShareBill, withFurniture: $withFurniture, description: $description, ownerContact: $ownerContact) {
+        _id  
         image
         price
         parkingSpace
@@ -58,7 +59,7 @@ export const UPDATE_ROOM = gql`
 `
 
 export const REMOVE_ROOM = gql`
-  mutation removeRoom($roomId: String!) {
+  mutation removeRoom($roomId: ID!) {
     removeRoom(roomId: $roomId) {
         _id
         image
