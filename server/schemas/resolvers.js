@@ -23,7 +23,14 @@ const resolvers = {
         // get one room by ID
         room: async (parent, { roomId }) => {
             return Room.findOne({ _id: roomId })
+        },
+        users: async () => {
+            return User.find().populate('rooms')
+        },
+        user: async (parent, { username }) => {
+            return User.findOne({ username }).populate('rooms')
         }
+
     },
     Mutation: {
         addUser: async (parent, args) => {
@@ -47,35 +54,49 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        addRoom: async (parent, { image, location, price, totalRooms, parkingSpace, isShareBill, withFurniture, description, ownerEmail, ownerContact, createdAt }) => {
-            const room = await Room.create({ image, location, price, totalRooms, parkingSpace, isShareBill, withFurniture, description, ownerEmail, ownerContact, createdAt })
+        addRoom: async (parent, { image, location, price, totalRooms, parkingSpace, isShareBill, withFurniture, description, ownerEmail, ownerContact, createdAt }, context) => {
+            if (context.user) {
+                const room = await Room.create({ image, location, price, totalRooms, parkingSpace, isShareBill, withFurniture, description, ownerEmail, ownerContact, createdAt })
 
-            await User.findOneAndUpdate(
-                { email: ownerEmail },
-                { $addToSet: { rooms: room._id } },
-                { new: true}
-            )
-
-            return room
-        },
-        removeRoom: async (parent, { roomId }) => {
-            return Room.findOneAndDelete({ _id: roomId })
-        },
-        updateRoom: async (parent, { roomId, image, price, parkingSpace, isShareBill, withFurniture, description, ownerContact }) => {
-
-            const updatedRoom = {
-                image : image,
-                price : price,
-                parkingSpace : parkingSpace,
-                isShareBill : isShareBill,
-                withFurniture : withFurniture,
-                description : description,
-                ownerContact : ownerContact
+                await User.findOneAndUpdate(
+                    { _id: context.user._id  },
+                    { $addToSet: { rooms: room._id } },
+                    { new: true }
+                )
+                return room
             }
+            throw new AuthenticationError('You need to be logged in!')
+        },
+        removeRoom: async (parent, { roomId }, context) => {
+            if (context.user) {
+                const room = await Room.findOneAndDelete({ _id: roomId })
 
-            const room = await Room.findByIdAndUpdate({ _id: roomId }, updatedRoom, {new: true})                      
+                await User.findOneAndUpdate(
+                    {_id: context.user._id},
+                    {$pull: {rooms: room._id}}
+                )
+                return room
+            }
+            throw new AuthenticationError('You need to be logged in!')
+        },
+        updateRoom: async (parent, { roomId, image, price, parkingSpace, isShareBill, withFurniture, description, ownerContact }, context) => {
+            if (context.user) {
 
-            return room
+                const updatedRoom = {
+                    image: image,
+                    price: price,
+                    parkingSpace: parkingSpace,
+                    isShareBill: isShareBill,
+                    withFurniture: withFurniture,
+                    description: description,
+                    ownerContact: ownerContact
+                }
+    
+                const room = await Room.findByIdAndUpdate({ _id: roomId }, updatedRoom, { new: true })
+    
+                return room
+            }
+            throw new AuthenticationError('You need to be logged in!')
         }
     }
 }
