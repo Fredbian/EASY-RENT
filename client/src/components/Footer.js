@@ -12,6 +12,13 @@ import LinkedIn from '../icons/linkedin.png'
 import Github from '../icons/github.png'
 import Facebook from '../icons/facebook_icon.png'
 import React from 'react'
+import { loadStripe } from "@stripe/stripe-js"
+
+// for Stripe donation------
+const stripePromise = loadStripe(
+    'pk_test_51LsfpjHtPeyJEzsnDUvg872ybKpKrO19NrPsJ5Zb0oqpXYgaDYdp2zqwSFnHQponV9PHBmx9RwZMZo6oqIYKaV2T00OcKUDTEj'
+)
+//------
 
 
 const imgStyle = {
@@ -22,7 +29,25 @@ const imgStyle = {
 
 export default function SmallCentered() {
 
-    
+    const handleClick = async (event) => {
+        const stripe = await stripePromise
+        stripe.redirectToCheckout({
+            lineItems: [{ price: 'price_1Lsg1dHtPeyJEzsnBM6uaBPW', quantity: 1 }],
+            mode: 'payment',
+            successUrl: "https://buy.stripe.com/test_aEU5nxgULfFG0Xm288",
+            cancelUrl: "https://buy.stripe.com/test_aEU5nxgULfFG0Xm288",
+            submitType: "donate",
+        })
+            .then(function (result) {
+                if (result.error) {
+                    console.log(result)
+                }
+            })
+    }
+
+
+
+
     return (
         <Box
             bg={useColorModeValue('gray.50', 'gray.900')}
@@ -41,7 +66,7 @@ export default function SmallCentered() {
                     align={{ base: 'center', md: 'center' }}>
                     <Text fontSize="18" fontWeight="700">© 2022 Made with ❤️ by Fred Bian</Text>
                     <Stack direction={'row'} spacing={6}>
-                        <Button colorScheme='blue'>Donate 5.00$</Button>
+                        <Button onClick={handleClick} colorScheme='blue'>Donate 5.00$</Button>
                         <Link label={'LinkedIn'} href={'https://www.linkedin.com/in/tao-bian-9aa137239/'} target="_blank">
                             <img src={LinkedIn} alt="LinkedIn" style={imgStyle}></img>
                         </Link>
