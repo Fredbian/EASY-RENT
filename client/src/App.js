@@ -8,7 +8,7 @@ import Footer from './components/Footer'
 import Navigation from './components/Navigation'
 // import Home from './pages/Home'
 import Login from './pages/Login'
-// import Signup from './pages/Signup'
+import Signup from './pages/Signup'
 // import Dashboard from './pages/Dashboard'
 // import AddRoom from './pages/AddRoom'
 // import SendMessage from './pages/SendMessage'
@@ -60,7 +60,7 @@ function App() {
               <Routes>
                 {/* <Route path="/" element={<Home />} /> */}
                 <Route path="/login" element={<Login />} />
-                {/* <Route path="/signup" element={<Signup />} /> */}
+                <Route path="/signup" element={<Signup />} />
                 {/* <Route path="/dashboard" element={<Dashboard />} /> */}
                 {/* <Route path="/addroom" element={<AddRoom />} /> */}
                 {/* <Route path="/updateroom/:roomId" element={<UpdateRoom />} /> */}
