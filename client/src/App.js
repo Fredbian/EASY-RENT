@@ -15,7 +15,6 @@ import Login from './pages/Login'
 // import UpdateRoom from './pages/UpdateRoom'
 
 
-
 //import Apollo hooks and modules
 import {
   ApolloClient,
@@ -56,10 +55,10 @@ function App() {
         {/* V2 */}
         <Router>
           <div className="flex-column justify-flex-start min-100-vh">
-            <Navigation />
+            {/* <Navigation /> */}
             <div className="container">
               <Routes>
-                <Route path="/" element={<Home />} />
+                {/* <Route path="/" element={<Home />} /> */}
                 <Route path="/login" element={<Login />} />
                 {/* <Route path="/signup" element={<Signup />} /> */}
                 {/* <Route path="/dashboard" element={<Dashboard />} /> */}
