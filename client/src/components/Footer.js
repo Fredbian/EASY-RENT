@@ -1,29 +1,59 @@
-import React from 'react'
+import {
+    Box,
+    Container,
+    Button,
+    Link,
+    Stack,
+    Text,
+    useColorModeValue,
+} from '@chakra-ui/react';
+
 import LinkedIn from '../icons/linkedin.png'
 import Github from '../icons/github.png'
 import Facebook from '../icons/facebook_icon.png'
-import '../styles/Footer.css'
+import React from 'react'
+
 
 const imgStyle = {
-    width: '50px',
-    height: '50px',
-    padding: '5px'
+    width: '40px',
+    height: '40px',
 }
 
-const footerStyle = {
-    fontWeight: 'bold'
-}
 
-function Footer() {
-    return(
-        <div className="footer w-100 mt-auto bg-secondary p-4" id="footer">
-            <p style={footerStyle}>Developed by Fred Bian</p>
-            <p style={footerStyle}>© 2022 Fred Bian</p>
-            <a href="https://www.linkedin.com/in/tao-bian-9aa137239/"><img src={LinkedIn} alt="LinkedIn" style={imgStyle}></img></a>
-            <a href="https://github.com/Fredbian?tab=repositories"><img src={Github} alt="Github" style={imgStyle}></img></a>
-            <a href="https://www.facebook.com/profile.php?id=100074467428814"><img src={Facebook} alt="Facebook" style={imgStyle}></img></a>
-        </div>
-    )
-}
+export default function SmallCentered() {
 
-export default Footer
+    
+    return (
+        <Box
+            bg={useColorModeValue('gray.50', 'gray.900')}
+            color={useColorModeValue('gray.700', 'gray.200')}>
+            <Box
+                borderTopWidth={1}
+                borderStyle={'solid'}
+                borderColor={useColorModeValue('gray.200', 'gray.700')}>
+                <Container
+                    as={Stack}
+                    maxW={'6xl'}
+                    py={4}
+                    direction={{ base: 'column', md: 'row' }}
+                    spacing={4}
+                    justify={{ base: 'center', md: 'space-between' }}
+                    align={{ base: 'center', md: 'center' }}>
+                    <Text fontSize="18" fontWeight="700">© 2022 Made with ❤️ by Fred Bian</Text>
+                    <Stack direction={'row'} spacing={6}>
+                        <Button colorScheme='blue'>Donate 5.00$</Button>
+                        <Link label={'LinkedIn'} href={'https://www.linkedin.com/in/tao-bian-9aa137239/'} target="_blank">
+                            <img src={LinkedIn} alt="LinkedIn" style={imgStyle}></img>
+                        </Link>
+                        <Link label={'Github'} href={'https://github.com/Fredbian?tab=repositories'} target="_blank">
+                            <img src={Github} alt="Github" style={imgStyle}></img>
+                        </Link>
+                        <Link label={'Fackbook'} href={'https://www.facebook.com/profile.php?id=100074467428814'} target="_blank">
+                            <img src={Facebook} alt="Facebook" style={imgStyle}></img>
+                        </Link>
+                    </Stack>
+                </Container>
+            </Box>
+        </Box>
+    );
+}
