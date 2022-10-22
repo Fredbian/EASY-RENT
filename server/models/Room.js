@@ -23,12 +23,10 @@ const roomSchema = new Schema(
             type: Number,
         },
         isShareBill: {
-            type: Boolean,
-            default: true,
+            type: String,
         },
         withFurniture: {
-            type: Boolean,
-            default: true,
+            type: String,
         },
         description: {
             type: String,
