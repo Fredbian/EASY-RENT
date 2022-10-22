@@ -21,7 +21,7 @@ import { Link as ReactLink } from 'react-router-dom';
 import { QUERY_ME } from "../utils/queries";
 
 // redirect -----
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const errorStyle = {
@@ -39,7 +39,7 @@ export default function LoginForm() {
   });
 
   // redirect -----
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -67,8 +67,8 @@ export default function LoginForm() {
     });
 
     //redirect ----
-    // const path = '/dashboard'
-    // navigate(path)
+    const path = '/dashboard'
+    navigate(path)
   };
 
 
