@@ -6,7 +6,7 @@ import Footer from './components/Footer'
 
 // TODO: import other pages if need
 import Navigation from './components/Navigation'
-// import Home from './pages/Home'
+import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 // import Dashboard from './pages/Dashboard'
@@ -58,7 +58,7 @@ function App() {
             <Navigation />
             <div className="container">
               <Routes>
-                {/* <Route path="/" element={<Home />} /> */}
+                <Route path="/" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 {/* <Route path="/dashboard" element={<Dashboard />} /> */}
