@@ -21,7 +21,7 @@ import { Link as ReactLink } from 'react-router-dom';
 
 
 export default function RoomCardDashboard({ rooms }) {
-
+    
     
      
     if (!rooms.length) {

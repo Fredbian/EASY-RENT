@@ -1,28 +1,15 @@
 import React from 'react'
-import RoomCard from '../components/RoomCard'
+import RoomCardHomePage from '../components/RoomCardHomePage'
 // import Auth from '../utils/auth'
 import { useQuery } from '@apollo/client'
 import { QUERY_ROOMS } from '../utils/queries'
+import { SimpleGrid } from '@chakra-ui/react'
 
 const Home = () => {
 
-    // create state for holding retured room data
-    // const [searchedRooms, setSearchedRooms] = useState([])
-    // create state for holding our search input data
-    // const [searchInput, setSearchInput] = useState('')
-
-    // const handleFormSubmit = (event) => {
-    //     event.preventDefault()
-
-    //     if(!searchInput) {
-    //         return false
-    //     }
-
-    // }
-
-    const { loading, data } = useQuery(QUERY_ROOMS)
+    const { loading, data, refetch } = useQuery(QUERY_ROOMS)
     const rooms = data?.rooms || []
-
+    refetch()
     return (
                 <main>
                     <div>
@@ -30,7 +17,9 @@ const Home = () => {
                             {loading ? (
                                 <div>Loading...</div>
                             ) : (
-                                <RoomCard rooms={rooms} />
+                                <SimpleGrid columns={rooms?.length > 0 ? [1, 2, 3] : [1]} spacing={5}>
+                                    <RoomCardHomePage rooms={rooms} />
+                                </SimpleGrid>
                             )}
                         </div>
                     </div>

@@ -19,7 +19,7 @@ import { Link as ReactLink } from 'react-router-dom';
 
 export default function RoomCardHomePage({ rooms }) {
     if (!rooms.length) {
-        return <h3 className='message' style={styles.h3Style}>No Room Info Yet!</h3>
+        return <h3 className='message'>No Room Info Yet!</h3>
     }
     return (
         <>
