@@ -17,9 +17,36 @@ import { BiCar } from "react-icons/bi";
 import { Link as ReactLink } from 'react-router-dom';
 
 
+const styles = {
+    Counters: {
+        flexDirection: 'row',
+    },
+
+    iconCounter: {
+        flex: 1,
+        flexDirection: 'column',
+        fontSize: 21,
+    },
+
+    iconCounterText: {
+        fontSize: 12,
+        fontWeight: 700
+    },
+    h3Style: {
+        textAlign: 'center',
+        fontSize: 30,
+        fontWeight: 600
+    },
+    spanStyle: {
+        fontWeight: 700,
+        fontSize: 12
+    }
+}
+
+
 export default function RoomCardHomePage({ rooms }) {
     if (!rooms.length) {
-        return <h3 className='message'>No Room Info Yet!</h3>
+        return <h3 className='message' style={styles.h3Style}>No Room Info Yet!</h3>
     }
     return (
         <>
@@ -56,15 +83,15 @@ export default function RoomCardHomePage({ rooms }) {
 
 
                             <Flex>
-                                <Stack  pl={'5px'} >
-                                    <Icon as={BiBed}  />
-                                    <Text >
+                                <Stack style={styles.Counters} pl={'5px'} >
+                                    <Icon as={BiBed} style={styles.iconCounter} />
+                                    <Text style={styles.iconCounterText}>
                                         {room.totalRooms}
                                     </Text>
                                 </Stack>
-                                <Stack  pl={'5px'} >
-                                    <Icon as={BiCar}  />
-                                    <Text >
+                                <Stack style={styles.Counters} pl={'5px'} >
+                                    <Icon as={BiCar} style={styles.iconCounter} />
+                                    <Text style={styles.iconCounterText}>
                                         {room.parkingSpace}
                                     </Text>
                                 </Stack>
@@ -72,11 +99,17 @@ export default function RoomCardHomePage({ rooms }) {
 
                             <Box bg={'gray.50'} px={6} py={10}>
                                 <List spacing={3}>
-                                    <ListItem fontSize="sm">
-                                        Location: {room.location}
+                                    <ListItem fontSize="12">
+                                        <span style={styles.spanStyle}>
+                                        Location:  
+                                        </span><span> </span>
+                                        {room.location}
                                     </ListItem>
                                     <ListItem fontSize="sm">
-                                        Share Bill: {room.isShareBill}
+                                    <span style={styles.spanStyle}>                                         
+                                        Share Bill: 
+                                        </span><span> </span>
+                                        {room.isShareBill}
                                     </ListItem>
                                     <ListItem fontSize="sm">
                                         With Furniture: {room.withFurniture}
