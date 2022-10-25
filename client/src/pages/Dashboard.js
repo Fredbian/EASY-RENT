@@ -29,7 +29,32 @@ const styles = {
 
 
 const Dashboard = () => {
-    
+    const { username: userParam } = useParams();
+
+    const { loading, data, refetch } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+        variables: { username: userParam },
+    });
+
+    refetch()
+    const user = data?.me || data?.user || {};
+    // navigate to personal profile page if username is yours
+    if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
+        return <Navigate to="/me" />;
+    }
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!user?.username) {
+        return (
+            <h4 style={styles.messageStyle}>
+                You need to be logged in to see this. Use the navigation links to
+                <Link as={ReactLink} style={styles.linkStyle} to="/login">login</Link> or <Link as={ReactLink} style={styles.linkStyle} to="/signup">signup.</Link>
+            </h4>
+        );
+    }
+
     return (
         <div>
             <div className="flex-row justify-center mb-3">
