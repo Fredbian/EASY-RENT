@@ -18,14 +18,72 @@ import { REMOVE_ROOM } from "../utils/mutations"
 import { useMutation } from "@apollo/react-hooks"
 import Auth from '../utils/auth';
 import { Link as ReactLink } from 'react-router-dom';
+import { QUERY_ME, QUERY_ROOMS } from '../utils/queries';
+// redirect -----
+import { useNavigate } from "react-router-dom"
+
+const styles = {
+    Counters: {
+        flexDirection: 'row',
+    },
+
+    iconCounter: {
+        flex: 1,
+        flexDirection: 'column',
+        fontSize: 21,
+    },
+
+    iconCounterText: {
+        fontSize: 12,
+        fontWeight: 700
+    },
+    h3Style: {
+        textAlign: 'center',
+        fontSize: 30,
+        fontWeight: 600
+    }
+}
 
 
 export default function RoomCardDashboard({ rooms }) {
-    
-    
+
+    const [removeRoom] = useMutation(REMOVE_ROOM, {
+        refetchQueries: [
+            {query: QUERY_ROOMS},
+            {query: QUERY_ME}
+        ]
+    })
+
+     // redirect -----
+     const navigate = useNavigate()
      
+    const handleDeleteRoom = async (roomId) => {
+        // const roomId = rooms._id
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+        if (!token) {
+            return false;
+        }
+
+        try {
+            await removeRoom({
+                variables: {
+                    roomId: roomId,
+                },
+            });
+            // rooms = rooms.filter(room => room._id !== roomId)
+            // window.location.assign('/dashboard')
+            //redirect ----
+            const path = '/dashboard'
+            navigate(path)
+
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+
     if (!rooms.length) {
-        return <h3>No Room Info Yet!</h3>
+        return <h3 style={styles.h3Style}>No Room Info Yet!</h3>
     }
 
 
@@ -64,15 +122,15 @@ export default function RoomCardDashboard({ rooms }) {
 
 
                             <Flex>
-                                <Stack  pl={'5px'} >
-                                    <Icon as={BiBed}  />
-                                    <Text >
+                                <Stack style={styles.Counters} pl={'5px'} >
+                                    <Icon as={BiBed} style={styles.iconCounter} />
+                                    <Text style={styles.iconCounterText}>
                                         {room.totalRooms}
                                     </Text>
                                 </Stack>
-                                <Stack  pl={'5px'} >
-                                    <Icon as={BiCar}  />
-                                    <Text >
+                                <Stack style={styles.Counters} pl={'5px'} >
+                                    <Icon as={BiCar} style={styles.iconCounter} />
+                                    <Text style={styles.iconCounterText}>
                                         {room.parkingSpace}
                                     </Text>
                                 </Stack>
