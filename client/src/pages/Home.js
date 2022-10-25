@@ -17,7 +17,7 @@ const Home = () => {
                             {loading ? (
                                 <div>Loading...</div>
                             ) : (
-                                <SimpleGrid columns={rooms?.length > 0 ? [1, 2, 3] : [1]} spacing={5}>
+                                <SimpleGrid minChildWidth={'350px'} columns={rooms?.length > 0 ? [1, 2, 3] : [1]} spacing={5}>
                                     <RoomCardHomePage rooms={rooms} />
                                 </SimpleGrid>
                             )}
