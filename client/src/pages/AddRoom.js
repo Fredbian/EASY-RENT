@@ -22,14 +22,130 @@ import { ADD_ROOM } from '../utils/mutations';
 import Auth from '../utils/auth'
 import { Link as ReactLink } from 'react-router-dom';
 
+// redirect -----
+import { useNavigate } from "react-router-dom"
+
+
+const styles = {
+    messageStyle: {
+        textAlign: 'center',
+        fontSize: 30,
+        fontWeight: 600,
+        color: 'red'
+    },
+    errorStyle: {
+        fontWeight: '700',
+        color: 'red'
+    },
+    linkStyle: {
+        color: 'blue'
+    }
+}
+
 
 
 export default function AddRoomForm() {
-     return (
+
+    const [formData, setFormData] = useState({
+        location: '',
+        totalRooms: '',
+        parkingSpace: '',
+        price: '',
+        ownerEmail: '',
+        ownerContact: '',
+        withFurniture: '',
+        isShareBill: '',
+        description: ''
+    })
+
+    // redirect -----
+    const navigate = useNavigate()
+
+
+    const [addRoom, { error }] = useMutation(ADD_ROOM, {
+        refetchQueries: [
+            {query: QUERY_ROOMS},
+            {query: QUERY_ME},
+        ]
+
+
+        // cache ------
+        // update(cache, { data: { addRoom } }) {
+        //     try {
+        //         const roomsQuery = cache.readQuery({ query: QUERY_ROOMS })
+
+        //         if (!roomsQuery) {
+        //             const rooms = roomsQuery.rooms
+        //             cache.writeQuery({
+        //                 query: QUERY_ROOMS,
+        //                 data: { rooms: [addRoom, ...rooms] },
+        //             })
+        //         }
+        //     } catch (e) {
+        //         console.error(e)
+        //     }
+
+        //     const meQuery = cache.readQuery({ query: QUERY_ME });
+
+        //     if (!meQuery) {
+        //         const me = meQuery.me;
+        //         cache.writeQuery({
+        //             query: QUERY_ME,
+        //             data: { me: { ...me, rooms: [...me.rooms, addRoom] } }
+        //         })
+        //     }
+        // }
+    })
+
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+
+        try {
+            const { data } = await addRoom({
+                variables: {
+                    ...formData,
+                    price: Number(formData.price),
+                    totalRooms: Number(formData.totalRooms),
+                    parkingSpace: Number(formData.parkingSpace),
+                },
+            });
+
+            setFormData({
+                location: '',
+                totalRooms: '',
+                parkingSpace: '',
+                price: '',
+                ownerEmail: '',
+                ownerContact: '',
+                withFurniture: '',
+                isShareBill: '',
+                description: ''
+            });
+
+            //redirect ----
+            const path = '/dashboard'
+            navigate(path)
+            
+            // window.location.assign('/dashboard')
+
+        } catch (err) {
+            console.error(err);
+        }
+
+    };
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target
+        setFormData({ ...formData, [name]: value })
+    }
+
+
+
+    return (
         <>
             {Auth.loggedIn() ? (
                 <>
-                    <form id='addRoomForm' >
+                    <form id='addRoomForm' onSubmit={handleFormSubmit}>
                         <Flex
                             bg={'gray.100'}
                             align="center"
@@ -74,10 +190,10 @@ export default function AddRoomForm() {
                                                             <Input
                                                                 maxLength={300}
                                                                 minLength={3}
-                                                             
+                                                                value={formData.location}
                                                                 type="text"
                                                                 name="location"
-                                                           
+                                                                onChange={handleInputChange}
                                                             />
                                                         </InputGroup>
                                                     </FormControl>
@@ -88,8 +204,8 @@ export default function AddRoomForm() {
                                                             <Input
                                                                 type="number"
                                                                 name="totalRooms"
-                                                            
-                                                         
+                                                                value={formData.totalRooms}
+                                                                onChange={handleInputChange}
                                                             />
                                                         </InputGroup>
                                                     </FormControl>
@@ -100,8 +216,8 @@ export default function AddRoomForm() {
                                                             <Input
                                                                 type="number"
                                                                 name="parkingSpace"
-                                                            
-                                                            
+                                                                value={formData.parkingSpace}
+                                                                onChange={handleInputChange}
                                                             />
                                                         </InputGroup>
                                                     </FormControl>
@@ -112,8 +228,8 @@ export default function AddRoomForm() {
                                                             <Input
                                                                 type="number"
                                                                 name="price"
-                                                                
-                                                                
+                                                                value={formData.price}
+                                                                onChange={handleInputChange}
                                                             />
                                                         </InputGroup>
                                                     </FormControl>
@@ -124,8 +240,8 @@ export default function AddRoomForm() {
                                                             <Input
                                                                 type="text"
                                                                 name="ownerEmail"
-                                                                
-                                                               
+                                                                value={formData.ownerEmail}
+                                                                onChange={handleInputChange}
                                                             />
                                                         </InputGroup>
                                                     </FormControl>
@@ -136,8 +252,8 @@ export default function AddRoomForm() {
                                                             <Input
                                                                 type="text"
                                                                 name="ownerContact"
-                                                        
-                                                           
+                                                                value={formData.ownerContact}
+                                                                onChange={handleInputChange}
                                                             />
                                                         </InputGroup>
                                                     </FormControl>
@@ -156,8 +272,8 @@ export default function AddRoomForm() {
                                                         </InputGroup> */}
                                                         <RadioGroup>
                                                             <HStack spacing={'24px'}>
-                                                                <Radio value={'YES'} name="withFurniture">YES</Radio>
-                                                                <Radio value={'NO'} name="withFurniture">NO</Radio>
+                                                                <Radio value={'YES'} name="withFurniture" onChange={handleInputChange} checked={formData.withFurniture === 'YES'} >YES</Radio>
+                                                                <Radio value={'NO'} name="withFurniture" onChange={handleInputChange} checked={formData.withFurniture === 'NO'}>NO</Radio>
                                                             </HStack>
                                                         </RadioGroup>
                                                     </FormControl>
@@ -175,8 +291,8 @@ export default function AddRoomForm() {
                                                         </InputGroup> */}
                                                         <RadioGroup>
                                                             <HStack spacing={'24px'}>
-                                                                <Radio value={'YES'} name="isShareBill">YES</Radio>
-                                                                <Radio value={'NO'} name="isShareBill">NO</Radio>
+                                                                <Radio value={'YES'} name="isShareBill" onChange={handleInputChange} checked={formData.isShareBill === 'YES'} >YES</Radio>
+                                                                <Radio value={'NO'} name="isShareBill" onChange={handleInputChange} checked={formData.isShareBill === 'NO'}>NO</Radio>
                                                             </HStack>
                                                         </RadioGroup>
                                                     </FormControl>
@@ -188,8 +304,8 @@ export default function AddRoomForm() {
                                                             name="description"
                                                             rows={6}
                                                             resize="none"
-                                                
-                                                           
+                                                            value={formData.description}
+                                                            onChange={handleInputChange}
                                                         />
                                                     </FormControl>
 
@@ -206,7 +322,11 @@ export default function AddRoomForm() {
                                                     >
                                                         Submit
                                                     </Button>
-                                                   
+                                                    {error && (
+                                                        <div style={styles.errorStyle}>
+                                                            Something Wrong!
+                                                        </div>
+                                                    )}
 
                                                 </VStack>
                                             </Box>
@@ -218,9 +338,9 @@ export default function AddRoomForm() {
                     </form>
                 </>
             ) : (
-                <p>
+                <p style={styles.messageStyle}>
                     You need to be logged in to post your rooms. Please{' '}
-                    <Link as={ReactLink} to="/login">login</Link> or <Link as={ReactLink} to="/signup">signup.</Link>
+                    <Link as={ReactLink} style={styles.linkStyle} to="/login">login</Link> or <Link as={ReactLink} style={styles.linkStyle} to="/signup">signup.</Link>
                 </p>
             )}
         </>
