@@ -10,7 +10,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
-// import AddRoom from './pages/AddRoom'
+import AddRoom from './pages/AddRoom'
 // import SendMessage from './pages/SendMessage'
 // import UpdateRoom from './pages/UpdateRoom'
 
@@ -62,7 +62,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<Signup />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-                {/* <Route path="/addroom" element={<AddRoom />} /> */}
+                <Route path="/addroom" element={<AddRoom />} />
                 {/* <Route path="/updateroom/:roomId" element={<UpdateRoom />} /> */}
                 {/* <Route path="/sendmessage/:roomId" element={<SendMessage />} /> */}
                 <Route render={() => <h1 className="display-2">Wrong page!</h1>} />
