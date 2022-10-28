@@ -15,8 +15,17 @@ import {
     RadioGroup,
     VStack,
 } from '@chakra-ui/react';
-import { Link as ReactLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_ROOMS, QUERY_ME } from '../utils/queries'
+import { UPDATE_ROOM } from '../utils/mutations';
 import Auth from '../utils/auth'
+import { useParams } from 'react-router-dom';
+import { Link as ReactLink } from 'react-router-dom';
+
+import { QUERY_SINGLE_ROOM } from '../utils/queries';
+// redirect -----
+import { useNavigate  } from "react-router-dom";
 
 
 export default function UpdateRoomForm() {
