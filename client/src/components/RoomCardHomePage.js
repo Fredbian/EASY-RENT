@@ -38,8 +38,12 @@ const styles = {
         fontWeight: 600
     },
     spanStyle: {
-        fontWeight: 700,
-        fontSize: 12
+        fontWeight: 700
+    },
+    emailStyle: {
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden'
     }
 }
 
@@ -97,28 +101,37 @@ export default function RoomCardHomePage({ rooms }) {
                                 </Stack>
                             </Flex>
 
-                            <Box bg={'gray.50'} px={6} py={10}>
+                            <Box bg={'gray.50'} px={5} py={6}>
                                 <List spacing={3}>
-                                    <ListItem fontSize="12">
+                                    <ListItem fontSize="13">
                                         <span style={styles.spanStyle}>
-                                        Location:  
+                                            Location:
                                         </span><span> </span>
                                         {room.location}
                                     </ListItem>
-                                    <ListItem fontSize="sm">
-                                    <span style={styles.spanStyle}>                                         
-                                        Share Bill: 
+                                    <ListItem fontSize="13">
+                                        <span style={styles.spanStyle}>
+                                            Share Bill:
                                         </span><span> </span>
                                         {room.isShareBill}
                                     </ListItem>
-                                    <ListItem fontSize="sm">
-                                        With Furniture: {room.withFurniture}
+                                    <ListItem fontSize="13">
+                                        <span style={styles.spanStyle}>
+                                            With Furniture:
+                                        </span><span> </span>
+                                        {room.withFurniture}
                                     </ListItem>
-                                    <ListItem fontSize="sm">
-                                        Owner Email: {room.ownerEmail}
+                                    <ListItem fontSize="13" style={styles.emailStyle}>
+                                        <span style={styles.spanStyle}>
+                                            Owner Email:
+                                        </span><span> </span>
+                                        {room.ownerEmail}
                                     </ListItem>
-                                    <ListItem fontSize="sm">
-                                        Owner Contact: {room.ownerContact}
+                                    <ListItem fontSize="13">
+                                        <span style={styles.spanStyle}>
+                                            Owner Contact:
+                                        </span><span> </span>
+                                        {room.ownerContact}
                                     </ListItem>
                                     <ListItem fontSize="12px" fontWeight={600}>
                                         Post At: {room.createdAt}

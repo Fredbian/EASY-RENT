@@ -48,7 +48,7 @@ export default function SendMessageForm() {
 
 
         };
-        let response = await fetch(`http://localhost:3001/sendmessage/:roomId`, {
+        let response = await fetch(`https://p3-easy-rent.herokuapp.com/sendmessage/:roomId`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json;charset=utf-8"

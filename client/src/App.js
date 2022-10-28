@@ -15,6 +15,7 @@ import SendMessage from './pages/SendMessage'
 import UpdateRoom from './pages/UpdateRoom'
 
 
+
 //import Apollo hooks and modules
 import {
   ApolloClient,
@@ -24,7 +25,7 @@ import {
 } from "@apollo/client"
 
 import { setContext } from "@apollo/client/link/context"
-// import RoomCardDashboard from './components/RoomCardDashboard';
+import RoomCardDashboard from './components/RoomCardDashboard';
 
 
 // Construct main GraphQL API endpoint

@@ -22,14 +22,15 @@ import { QUERY_USER, QUERY_ME } from '../utils/queries'
 import { useParams } from 'react-router-dom';
 
 
+
 export default function Navigation() {
   const { username: userParam } = useParams();
 
-    const { loading, data, refetch } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-        variables: { username: userParam },
-    });
+  const { loading, data, refetch } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+    variables: { username: userParam },
+  });
 
-    refetch()
+  refetch()
 
   const { isOpen, onToggle } = useDisclosure();
 
@@ -38,15 +39,18 @@ export default function Navigation() {
     Auth.logout();
   };
 
+  const linkColor = useColorModeValue('gray.600', 'gray.200');
+  const linkHoverColor = useColorModeValue('white');
+
   if (loading) {
     return <div>Loading...</div>;
-}
+  }
 
   return (
     <Box>
       <Flex
-        bg={'white'}
-        color={'white'}
+        bg={'gray.200'}
+        color={'gray.600'}
         minH={'60px'}
         py={{ base: 2 }}
         px={{ base: 4 }}
@@ -60,6 +64,7 @@ export default function Navigation() {
           display={{ base: 'flex', md: 'none' }}>
           <IconButton
             onClick={onToggle}
+            _hover={{ color: linkHoverColor, bg: 'gray.400', }}
             icon={
               isOpen ? <CloseIcon w={3} h={3} /> : <HamburgerIcon w={5} h={5} />
             }
@@ -69,7 +74,7 @@ export default function Navigation() {
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
           <Text
-            fontSize="lg" fontWeight="bold"
+            fontSize="22" fontWeight="bold"
             textAlign={{ base: 'center', md: 'left' }}
             fontFamily={'heading'}
             color={'gray.800'}>
@@ -104,10 +109,13 @@ export default function Navigation() {
           ) : (
             <>
               <Button
+                p={2}
                 as={ReactLink}
                 fontSize={'sm'}
-                fontWeight={400}
+                fontWeight={600}
                 variant={'link'}
+                color={linkColor}
+                _hover={{ textDecoration: 'none', color: linkHoverColor, bg: 'gray.400', }}
                 to={'/login'}>
                 Login
               </Button>
@@ -138,34 +146,36 @@ export default function Navigation() {
 
 const DesktopNav = () => {
   const linkColor = useColorModeValue('gray.600', 'gray.200');
-  const linkHoverColor = useColorModeValue('gray.800', 'white');
+  const linkHoverColor = useColorModeValue('white');
 
   return (
     <Stack direction={'row'} spacing={4}>
       <Box>
-        <Link
+        <Button
           p={2}
           as={ReactLink}
           to='/'
           fontSize={'sm'}
-          fontWeight={500}
+          variant={'link'}
+          fontWeight={600}
           color={linkColor}
-          _hover={{ textDecoration: 'none', color: linkHoverColor, }}
+          _hover={{ textDecoration: 'none', color: linkHoverColor, bg: 'gray.400', }}
         >
           Home
-        </Link>
+        </Button>
 
         {Auth.loggedIn() ? (
           <>
-            <Link p={2}
+            <Button p={2}
               to='/dashboard'
               as={ReactLink}
+              variant={'link'}
               fontSize={'sm'}
               fontWeight={500}
-              color={'pink.300'}
-              _hover={{ textDecoration: 'none', color: linkHoverColor, }}>
+              color={'pink.400'}
+              _hover={{ textDecoration: 'none', color: linkHoverColor, bg: 'gray.400',}}>
               {Auth.getProfile().data.username}'s Dashboard
-            </Link>
+            </Button>
           </>
         ) : (
           <>
@@ -183,7 +193,7 @@ const MobileNav = () => {
     <Stack
       bg={useColorModeValue('white', 'gray.800')}
       p={4}
-      spacing={4}
+      spacing={1}
       display={{ md: 'none' }}>
       <Flex
         py={2}
@@ -214,15 +224,15 @@ const MobileNav = () => {
             }}>
             <Text
               fontWeight={600}
-              color={'pink.300'}
-              >
+              color={'pink.400'}
+            >
               {Auth.getProfile().data.username}'s Dashboard
             </Text>
           </Flex>
         </>
       ) : (
         <>
-          
+
         </>
       )}
 

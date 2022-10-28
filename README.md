@@ -1,7 +1,7 @@
 # P3-easy-rent
 
 ## Description
-
+Easy Rent is a third party platform that allows house owners to post their rooms information for renting and allows potential tenants to check room info and send query. It is easy to use - no complicated registration and verification process.
 
 ## User Story
 ```
@@ -63,11 +63,15 @@ npm run develop
 
 
 ## Screenshots
-![Screenshot]()
-![Screenshot]()
-![Screenshot]()
+![Screenshot](https://github.com/Fredbian/p3-easy-renting/blob/main_new/client/public/screenshots/p3-easy-rent.herokuapp.com_%20(1).png)
+![Screenshot](https://github.com/Fredbian/p3-easy-renting/blob/main_new/client/public/screenshots/p3-easy-rent.herokuapp.com_%20(2).png)
+![Screenshot](https://github.com/Fredbian/p3-easy-renting/blob/main_new/client/public/screenshots/p3-easy-rent.herokuapp.com_%20(3).png)
+![Screenshot](https://github.com/Fredbian/p3-easy-renting/blob/main_new/client/public/screenshots/p3-easy-rent.herokuapp.com_%20(4).png)
+![Screenshot](https://github.com/Fredbian/p3-easy-renting/blob/main_new/client/public/screenshots/p3-easy-rent.herokuapp.com_%20(5).png)
+![Screenshot](https://github.com/Fredbian/p3-easy-renting/blob/main_new/client/public/screenshots/p3-easy-rent.herokuapp.com_%20(6).png)
+![Screenshot](https://github.com/Fredbian/p3-easy-renting/blob/main_new/client/public/screenshots/p3-easy-rent.herokuapp.com_.png)
 
 
 ## URLs
-* Github: 
-* Heroku deployed link: 
+* Github: https://github.com/Fredbian/p3-easy-renting  
+* Heroku deployed link: https://p3-easy-rent.herokuapp.com/

@@ -41,6 +41,14 @@ const styles = {
         textAlign: 'center',
         fontSize: 30,
         fontWeight: 600
+    },
+    spanStyle: {
+        fontWeight: 700
+    },
+    emailStyle: {
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden'
     }
 }
 
@@ -49,14 +57,14 @@ export default function RoomCardDashboard({ rooms }) {
 
     const [removeRoom] = useMutation(REMOVE_ROOM, {
         refetchQueries: [
-            {query: QUERY_ROOMS},
-            {query: QUERY_ME}
+            { query: QUERY_ROOMS },
+            { query: QUERY_ME }
         ]
     })
 
-     // redirect -----
-     const navigate = useNavigate()
-     
+    // redirect -----
+    const navigate = useNavigate()
+
     const handleDeleteRoom = async (roomId) => {
         // const roomId = rooms._id
         const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -138,20 +146,35 @@ export default function RoomCardDashboard({ rooms }) {
 
                             <Box bg={'gray.50'} px={6} py={10}>
                                 <List spacing={3}>
-                                    <ListItem fontSize="sm">
-                                        Location: {room.location}
+                                    <ListItem fontSize="13">
+                                        <span style={styles.spanStyle}>
+                                            Location:
+                                        </span><span> </span>
+                                        {room.location}
                                     </ListItem>
-                                    <ListItem fontSize="sm">
-                                        Share Bill: {room.isShareBill}
+                                    <ListItem fontSize="13">
+                                        <span style={styles.spanStyle}>
+                                            Share Bill:
+                                        </span><span> </span>
+                                        {room.isShareBill}
                                     </ListItem>
-                                    <ListItem fontSize="sm">
-                                        With Furniture: {room.withFurniture}
+                                    <ListItem fontSize="13">
+                                        <span style={styles.spanStyle}>
+                                            With Furniture:
+                                        </span><span> </span>
+                                        {room.withFurniture}
                                     </ListItem>
-                                    <ListItem fontSize="sm">
-                                        Owner Email: {room.ownerEmail}
+                                    <ListItem fontSize="13" style={styles.emailStyle}>
+                                        <span style={styles.spanStyle}>
+                                            Owner Email:
+                                        </span><span> </span>
+                                        {room.ownerEmail}
                                     </ListItem>
-                                    <ListItem fontSize="sm">
-                                        Owner Contact: {room.ownerContact}
+                                    <ListItem fontSize="13">
+                                        <span style={styles.spanStyle}>
+                                            Owner Contact:
+                                        </span><span> </span>
+                                        {room.ownerContact}
                                     </ListItem>
                                     <ListItem fontSize="12px" fontWeight={600}>
                                         Post At: {room.createdAt}

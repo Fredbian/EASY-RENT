@@ -82,7 +82,7 @@ const Dashboard = () => {
                     </Button>
                 </Flex>
 
-                <SimpleGrid columns={user?.rooms?.length > 0 ? [1, 2, 3] : [1]} spacing={5}>
+                <SimpleGrid minChildWidth={'350px'} columns={user?.rooms?.length > 0 ? [1, 2, 3] : [1]} spacing={5}>
                     <RoomCardDashboard
                         rooms={user.rooms}
                     />
