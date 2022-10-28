@@ -44,6 +44,7 @@ const styles = {
 }
 
 
+
 export default function UpdateRoomForm() {
     // redirect -----
     const navigate = useNavigate()
@@ -64,6 +65,20 @@ export default function UpdateRoomForm() {
         description: room.description || '',
         ownerContact: room.ownerContact || '',
     })
+
+    // call useEffect() hook to update form value, when we get the value from db
+    useEffect(() => {
+        setFormData({
+            price: room.price,
+            parkingSpace: room.parkingSpace,
+            isShareBill: room.isShareBill,
+            withFurniture: room.withFurniture,
+            description: room.description,
+            ownerContact: room.ownerContact
+        })
+    }, [room.price, room.parkingSpace, room.isShareBill, room.withFurniture, room.description, room.ownerContact])
+
+
 
     const [updateRoom, { error }] = useMutation(UPDATE_ROOM, { variables: { roomId: roomId } }, {
         refetchQueries: [
@@ -142,12 +157,13 @@ export default function UpdateRoomForm() {
         return <div>Loading...</div>
     }
 
+
     return (
         <>
             {Auth.loggedIn() ? (
                 <form
                     id='updateRoomForm'
-                   
+                    onSubmit={handleFormSubmit}
                 >
                     <Flex
                         bg={'gray.100'}
@@ -193,7 +209,8 @@ export default function UpdateRoomForm() {
                                                         <Input
                                                             type="number"
                                                             name="price"
-                                                          
+                                                            value={formData.price || ''}
+                                                            onChange={handleInputChange}
                                                         />
                                                     </InputGroup>
                                                 </FormControl>
@@ -204,8 +221,8 @@ export default function UpdateRoomForm() {
                                                         <Input
                                                             type="number"
                                                             name="parkingSpace"
-                                                            
-                                                            
+                                                            value={formData.parkingSpace || ''}
+                                                            onChange={handleInputChange}
                                                         />
                                                     </InputGroup>
                                                 </FormControl>
@@ -216,8 +233,8 @@ export default function UpdateRoomForm() {
                                                         <Input
                                                             type="text"
                                                             name="ownerContact"
-                                                            
-                                                           
+                                                            value={formData.ownerContact || ''}
+                                                            onChange={handleInputChange}
                                                         />
                                                     </InputGroup>
                                                 </FormControl>
@@ -236,8 +253,8 @@ export default function UpdateRoomForm() {
                                                     </InputGroup> */}
                                                     <RadioGroup>
                                                         <HStack spacing={'24px'}>
-                                                            <Radio value={'YES'} name="withFurniture">YES</Radio>
-                                                            <Radio value={'NO'} name="withFurniture">NO</Radio>
+                                                            <Radio value={'YES'} name="withFurniture" onChange={handleInputChange} checked={formData.withFurniture === 'YES'} >YES</Radio>
+                                                            <Radio value={'NO'} name="withFurniture" onChange={handleInputChange} checked={formData.withFurniture === 'NO'}>NO</Radio>
                                                         </HStack>
                                                     </RadioGroup>
                                                 </FormControl>
@@ -254,8 +271,8 @@ export default function UpdateRoomForm() {
                                                     </InputGroup> */}
                                                     <RadioGroup>
                                                         <HStack spacing={'24px'}>
-                                                            <Radio value={'YES'} name="isShareBill">YES</Radio>
-                                                            <Radio value={'NO'} name="isShareBill">NO</Radio>
+                                                            <Radio value={'YES'} name="isShareBill" onChange={handleInputChange} checked={formData.isShareBill === 'YES'} >YES</Radio>
+                                                            <Radio value={'NO'} name="isShareBill" onChange={handleInputChange} checked={formData.isShareBill === 'NO'}>NO</Radio>
                                                         </HStack>
                                                     </RadioGroup>
                                                 </FormControl>
@@ -266,8 +283,8 @@ export default function UpdateRoomForm() {
                                                         name="description"
                                                         rows={6}
                                                         resize="none"
-                                                        
-                                                        
+                                                        value={formData.description || ''}
+                                                        onChange={handleInputChange}
                                                     />
                                                 </FormControl>
 
@@ -283,7 +300,12 @@ export default function UpdateRoomForm() {
                                                     }}
                                                 >
                                                     Submit
-                                                </Button>                                            
+                                                </Button>
+                                                {error && (
+                                                    <div style={styles.errorStyle}>
+                                                        Something Wrong!
+                                                    </div>
+                                                )}
 
                                             </VStack>
                                         </Box>
@@ -294,9 +316,9 @@ export default function UpdateRoomForm() {
                     </Flex>
                 </form>
             ) : (
-                <p>
+                <p style={styles.messageStyle}>
                     You need to be logged in to see this page. Please{' '}
-                    <Link as={ReactLink} to="/login">login</Link> or <Link as={ReactLink}  to="/signup">signup.</Link>
+                    <Link as={ReactLink} style={styles.linkStyle} to="/login">login</Link> or <Link as={ReactLink} style={styles.linkStyle} to="/signup">signup.</Link>
                 </p>
             )}
         </>
