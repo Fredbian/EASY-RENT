@@ -27,6 +27,8 @@ const imgStyle = {
 }
 
 
+
+
 export default function SmallCentered() {
 
     const handleClick = async (event) => {
@@ -49,7 +51,7 @@ export default function SmallCentered() {
 
 
     return (
-        <Box
+        <Box 
             bg={useColorModeValue('gray.50', 'gray.900')}
             color={useColorModeValue('gray.700', 'gray.200')}>
             <Box
