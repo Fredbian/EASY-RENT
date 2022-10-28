@@ -27,8 +27,121 @@ import { QUERY_SINGLE_ROOM } from '../utils/queries';
 // redirect -----
 import { useNavigate  } from "react-router-dom";
 
+const styles = {
+    messageStyle: {
+        textAlign: 'center',
+        fontSize: 30,
+        fontWeight: 600,
+        color: 'red'
+    },
+    errorStyle: {
+        fontWeight: '700',
+        color: 'red'
+    },
+    linkStyle: {
+        color: 'blue'
+    }
+}
+
 
 export default function UpdateRoomForm() {
+    // redirect -----
+    const navigate = useNavigate()
+
+    const { roomId } = useParams()
+
+    const { loading, data } = useQuery(QUERY_SINGLE_ROOM, {
+        variables: { roomId: roomId }
+    })
+
+    const room = data?.room || {}
+
+    const [formData, setFormData] = useState({
+        price: room.price || 0,
+        parkingSpace: room.parkingSpace || 0,
+        isShareBill: room.isShareBill || '',
+        withFurniture: room.withFurniture || '',
+        description: room.description || '',
+        ownerContact: room.ownerContact || '',
+    })
+
+    const [updateRoom, { error }] = useMutation(UPDATE_ROOM, { variables: { roomId: roomId } }, {
+        refetchQueries: [
+            {query: QUERY_ROOMS},
+            {query: QUERY_ME},
+        ]
+        
+        
+        // cache
+        // update(cache, { data: { updateRoom } }) {
+        //     try {
+        //         const roomsQuery = cache.readQuery({ query: QUERY_ROOMS })
+
+        //         if (!roomsQuery) {
+        //             const rooms = roomsQuery.rooms
+        //             cache.writeQuery({
+        //                 query: QUERY_ROOMS,
+        //                 data: { rooms: [updateRoom, ...rooms] }
+        //             })
+        //         }
+        //     } catch (e) {
+        //         console.error(e)
+        //     }
+
+        //     const meQuery = cache.readQuery({ query: QUERY_ME })
+
+        //     if (!meQuery) {
+        //         const me = meQuery.me
+        //         cache.writeQuery({
+        //             query: QUERY_ME,
+        //             data: { me: { ...me, rooms: [...me.rooms, updateRoom] } }
+        //         })
+        //     }
+        // }
+    })
+
+    const handleInputChange = (event) => {
+        const { name, value } = event.target
+        setFormData({ ...formData, [name]: value })
+    }
+
+    const handleFormSubmit = async (event) => {
+        event.preventDefault()
+
+        try {
+            const { data } = await updateRoom({
+                variables: {
+                    roomId: roomId,
+                    ...formData,
+                    price: Number(formData.price),
+                    parkingSpace: Number(formData.parkingSpace),
+                },
+            })
+
+            setFormData({
+                price: '',
+                parkingSpace: '',
+                isShareBill: '',
+                withFurniture: '',
+                description: '',
+                ownerContact: '',
+            })
+
+            //redirect ----
+            const path = '/dashboard'
+            navigate(path)
+            // window.location.assign('/dashboard')
+
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+
+    if (loading) {
+        return <div>Loading...</div>
+    }
+
     return (
         <>
             {Auth.loggedIn() ? (
