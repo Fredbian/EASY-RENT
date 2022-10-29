@@ -12,7 +12,7 @@ import {
   Text,
   Link,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 import { useMutation } from "@apollo/react-hooks";
@@ -49,6 +49,13 @@ export default function Signup() {
     }
   );
 
+  // if already logged in , redirect to dashboard
+  useEffect(() => {
+    if(Auth.loggedIn()){
+      navigate('/dashboard')
+    }
+  }, [navigate]);
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
@@ -63,20 +70,23 @@ export default function Signup() {
         variables: { ...userFormData },
       });
 
+      console.log('signup', {data})
       Auth.login(data.addUser.token);
+
+      setUserFormData({
+        username: "",
+        email: "",
+        password: "",
+      });
+  
+      window.location.reload();
+
+      
+
     } catch (e) {
       console.error(e);
     }
 
-    setUserFormData({
-      username: "",
-      email: "",
-      password: "",
-    });
-
-    //redirect ----
-    const path = '/dashboard'
-    navigate(path)
     
   };
 

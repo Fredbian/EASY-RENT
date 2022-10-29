@@ -31,16 +31,17 @@ const styles = {
 const Dashboard = () => {
     const { username: userParam } = useParams();
 
-    const { loading, data, refetch } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+    const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
         variables: { username: userParam },
     });
 
-    refetch()
     const user = data?.me || data?.user || {};
-    // navigate to personal profile page if username is yours
-    if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-        return <Navigate to="/me" />;
-    }
+    // navigate to personal profile page if username is yours ?????
+    // if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
+    //     return <Navigate to="/me" />;
+    // }
+
+    console.log({user})
 
     if (loading) {
         return <div>Loading...</div>;

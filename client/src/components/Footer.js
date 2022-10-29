@@ -11,8 +11,9 @@ import {
 import LinkedIn from '../icons/linkedin.png'
 import Github from '../icons/github.png'
 import Facebook from '../icons/facebook_icon.png'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { loadStripe } from "@stripe/stripe-js"
+import { useLocation } from 'react-router-dom';
 
 // for Stripe donation------
 const stripePromise = loadStripe(
@@ -27,7 +28,7 @@ const imgStyle = {
 }
 
 
-export default function SmallCentered() {
+export default function Footer() {
 
     const handleClick = async (event) => {
         const stripe = await stripePromise
@@ -45,11 +46,39 @@ export default function SmallCentered() {
             })
     }
 
+    const [footerStyle, setFooterStyle] = useState({});
+    const location = useLocation();
+    // in use effect
+    useEffect(() => {
+        setTimeout(() => {
 
+            // obtain height of main container
+            const mainContainer = document.querySelector(".container");
+            const height = mainContainer.clientHeight;
+            console.log(height);
+            // if > 700px
+            if(height < 700){
+                setFooterStyle({
+                    position: 'fixed',
+                    width: '100%',
+                    bottom: 0,
+                });
+            }else{
+                setFooterStyle({})
+            }
+            // then do nothing
+            // else apply 'fixed ' styling to footer
+        }, 1000)
+    }, [location.pathname])
+
+
+
+    
 
 
     return (
         <Box
+            style={footerStyle}
             bg={useColorModeValue('gray.200', 'gray.900')}
             color={useColorModeValue('gray.700', 'gray.200')}>
             <Box

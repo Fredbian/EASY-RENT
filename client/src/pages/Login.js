@@ -56,30 +56,26 @@ export default function LoginForm() {
       });
 
       Auth.login(data.login.token);
+      setUserFormData({
+        // username: "",
+        email: "",
+        password: "",
+      });
+  
+      //redirect ----
+      const path = '/dashboard'
+      navigate(path);
+
     } catch (e) {
+      // invalid cred
       console.error(e);
     }
 
-    setUserFormData({
-      // username: "",
-      email: "",
-      password: "",
-    });
-
-    //redirect ----
-    const path = '/dashboard'
-    navigate(path)
   };
 
 
   return (
-    <>
-      {data ? (
-        <p>
-          Success! You may now head{' '}
-          <Link as={ReactLink} to="/me">to Dashboard.</Link>
-        </p>
-      ) : (
+    <>     
         <form onSubmit={handleFormSubmit} id='loginForm'>
           <Flex
             minH={'100vh'}
@@ -153,8 +149,6 @@ export default function LoginForm() {
             </Stack>
           </Flex>
         </form>
-
-      )}
     </>
   );
 }
