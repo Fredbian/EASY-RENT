@@ -64,19 +64,22 @@ export default function Signup() {
       });
 
       Auth.login(data.addUser.token);
+      
+      setUserFormData({
+        username: "",
+        email: "",
+        password: "",
+      });
+  
+      //redirect ----
+      const path = '/dashboard'
+      navigate(path)
+
+
     } catch (e) {
       console.error(e);
     }
 
-    setUserFormData({
-      username: "",
-      email: "",
-      password: "",
-    });
-
-    //redirect ----
-    const path = '/dashboard'
-    navigate(path)
     
   };
 
