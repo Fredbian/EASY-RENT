@@ -73,5 +73,5 @@ npm run develop
 
 
 ## URLs
-* Github: https://github.com/Fredbian/p3-easy-renting  
-* Heroku deployed link: https://p3-easy-rent.herokuapp.com/
+* Github: https://github.com/Fredbian/easy-rent
+* Heroku deployed link: https://easy-rent-2022.herokuapp.com/
