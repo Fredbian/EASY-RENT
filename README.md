@@ -61,6 +61,16 @@ npm install
 npm run develop
 ```
 
+## Technical
+* MERN Stack
+* React
+* Node.js
+* JavaScript
+* MongoDB
+* GraphQL
+* Stripe
+* Chakra UI
+
 
 ## Screenshots
 ![Screenshot](https://github.com/Fredbian/p3-easy-renting/blob/main_new/client/public/screenshots/p3-easy-rent.herokuapp.com_%20(1).png)
